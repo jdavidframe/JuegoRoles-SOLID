@@ -1,16 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelo.personajes;
 
 import modelo.base.Personaje;
 import modelo.interfaces.IHabilidad;
 
-/**
- *
- * @author jesudavi
- */
 public class Guerrero extends Personaje {
+    private int fuerza;
 
+    public Guerrero(String nombre, int vidaMax, int ataqueBase, int defensaBase, int fuerza, IHabilidad habilidad) {
+        super(nombre, vidaMax, ataqueBase, defensaBase, 50, habilidad);
+        this.fuerza = fuerza;
+    }
+
+    @Override
+    public int calcularAtaque() {
+        return super.calcularAtaque() + this.fuerza;
+    }
 }
