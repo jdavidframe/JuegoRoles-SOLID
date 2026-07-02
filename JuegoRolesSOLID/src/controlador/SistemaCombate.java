@@ -6,18 +6,17 @@ package controlador;
 
 import java.util.List;
 import modelo.base.Personaje;
-import vista.VistaConsola;
+import modelo.interfaces.IVista;
 
 /**
  *
  * @author jesudavi
  */
-
 public class SistemaCombate {
 
-    private final VistaConsola vista;
+    private final IVista vista; // DIP aplicado: depende de la interfaz
 
-    public SistemaCombate(VistaConsola vista) {
+    public SistemaCombate(IVista vista) { // Inyección de dependencia abstracta
         this.vista = vista;
     }
 
@@ -42,8 +41,8 @@ public class SistemaCombate {
             ronda++;
             vista.mostrarMensaje("\n-------------------------------------------------\n");
 
-            if (ronda > 30) {
-                vista.mostrarMensaje("[ALERTA] Se ha alcanzado el límite de 30 rondas. Combate detenido.");
+            if (ronda > 6) {
+                vista.mostrarMensaje("[ALERTA] Se ha alcanzado el límite de 6 rondas. Combate detenido.");
                 break;
             }
         }

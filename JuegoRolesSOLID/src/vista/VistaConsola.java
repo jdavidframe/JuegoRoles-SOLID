@@ -3,25 +3,31 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package vista;
+
 import modelo.base.Personaje;
+import modelo.interfaces.IVista;
+
 /**
  *
  * @author jesudavi
  */
 
-public class VistaConsola {
+public class VistaConsola implements IVista {
 
+    @Override
     public void mostrarMensaje(String mensaje) {
         System.out.println(mensaje);
     }
 
+    @Override
     public void mostrarEstadoPersonaje(Personaje p) {
-        System.out.println(" > " + p.getNombre() 
-            + " -> HP: " + p.getVidaActual() 
-            + " | Energía: " + p.getEnergiaActual() 
-            + " | CD Habilidad: " + p.getCooldownHabilidad());
+        System.out.println(" > " + p.getNombre()
+                + " -> HP: " + p.getVidaActual()
+                + " | Energía: " + p.getEnergiaActual()
+                + " | CD Habilidad: " + p.getCooldownHabilidad());
     }
 
+    @Override
     public void mostrarInicioCombate(Personaje p1, Personaje p2) {
         System.out.println("\n=================================================");
         System.out.println("       INICIA EL COMBATE EN LA ARENA SOLID       ");
@@ -31,6 +37,7 @@ public class VistaConsola {
         System.out.println("=================================================\n");
     }
 
+    @Override
     public void mostrarFinCombate(Personaje ganador) {
         System.out.println("\n=================================================");
         if (ganador != null) {

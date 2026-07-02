@@ -9,6 +9,7 @@ import modelo.base.Personaje;
 import modelo.mecanicas.*;
 import modelo.personajes.*;
 import modelo.inventario.*;
+import modelo.interfaces.IVista;
 
 /**
  *
@@ -18,13 +19,13 @@ public class Ejecutor {
 
     public static void main(String[] args) {
 
-        VistaConsola vista = new VistaConsola();
+        IVista vista = new VistaConsola();
         SistemaCombate coreJuego = new SistemaCombate(vista);
 
         GolpeDevastador golpe = new GolpeDevastador();
         ExplosionArcana magia = new ExplosionArcana();
 
-        Personaje arturo = new Guerrero("Arturo El Guerrero", 130, 14, 10, 6, golpe);
+        Personaje arturo = new Guerrero("Ledesma El Guerrero", 130, 14, 10, 6, golpe);
         Personaje merlin = new Mago("Merlin El Mago", 95, 12, 4, 15, magia);
 
         Arma espadaSagrada = new Arma("Espada Sagrada", 6);
