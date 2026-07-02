@@ -14,9 +14,9 @@ import modelo.interfaces.IVista;
  */
 public class SistemaCombate {
 
-    private final IVista vista; // DIP aplicado: depende de la interfaz
+    private final IVista vista;
 
-    public SistemaCombate(IVista vista) { // Inyección de dependencia abstracta
+    public SistemaCombate(IVista vista) {
         this.vista = vista;
     }
 
@@ -31,26 +31,25 @@ public class SistemaCombate {
             vista.mostrarMensaje("");
 
             if (jugador1.getVidaActual() > 0) {
-                ejecutarTurnoPersonaje(jugador1, jugador2);
+                ejecutarTurnoGenerico(jugador1, jugador2);
             }
 
             if (jugador2.getVidaActual() > 0 && jugador1.getVidaActual() > 0) {
-                ejecutarTurnoPersonaje(jugador2, jugador1);
+                ejecutarTurnoGenerico(jugador2, jugador1);
             }
 
             ronda++;
             vista.mostrarMensaje("\n-------------------------------------------------\n");
 
-            if (ronda > 6) {
-                vista.mostrarMensaje("[ALERTA] Se ha alcanzado el límite de 6 rondas. Combate detenido.");
+            if (ronda > 30) {
+                vista.mostrarMensaje("Alerta: Limite de 30 rondas alcanzado. Combate finalizado.");
                 break;
             }
         }
-
         evaluarGanador(jugador1, jugador2);
     }
 
-    private void ejecutarTurnoPersonaje(Personaje activo, Personaje objetivo) {
+    private void ejecutarTurnoGenerico(Personaje activo, Personaje objetivo) {
         List<String> reportesEstados = activo.procesarTurno();
         for (String reporte : reportesEstados) {
             if (reporte != null && !reporte.isEmpty()) {
@@ -59,18 +58,15 @@ public class SistemaCombate {
         }
 
         if (activo.getVidaActual() <= 0) {
-            vista.mostrarMensaje("☠️ " + activo.getNombre() + " ha caído al inicio de su turno.");
+            vista.mostrarMensaje(activo.getNombre() + " ha caido por efectos de estado.");
             return;
         }
 
         if (activo.puedeActuar()) {
-            if (activo.getCooldownHabilidad() == 0) {
-                vista.mostrarMensaje(activo.usarHabilidadEspecial(objetivo));
-            } else {
-                vista.mostrarMensaje(activo.atacar(objetivo));
-            }
+            String resultadoAccion = activo.ejecutarTurnoCombate(objetivo);
+            vista.mostrarMensaje(resultadoAccion);
         } else {
-            vista.mostrarMensaje(activo.getNombre() + " pierde su oportunidad de actuar en esta ronda.");
+            vista.mostrarMensaje(activo.getNombre() + " no puede actuar en este turno.");
         }
     }
 

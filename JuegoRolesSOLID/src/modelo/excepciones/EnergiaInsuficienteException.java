@@ -2,22 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package modelo.interfaces;
-
-import modelo.base.Personaje;
+package modelo.excepciones;
 
 /**
  *
  * @author jesudavi
  */
-public interface IHabilidad {
+public class EnergiaInsuficienteException extends Exception {
 
-    String usar(Personaje usuario, Personaje objetivo);
-
-    String getNombre();
-
-    int getCostoEnergia();
-
-    int getCooldownMax();
-
+    public EnergiaInsuficienteException(String mensaje) {
+        super(mensaje);
+    }
 }

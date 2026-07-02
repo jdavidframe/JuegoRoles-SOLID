@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import modelo.interfaces.IEstadoAlterado;
 import modelo.interfaces.IHabilidad;
+import modelo.excepciones.*;
 
 /**
  *
@@ -39,6 +40,13 @@ public abstract class Personaje {
         this.estadosActivos = new ArrayList<>();
         this.objetoEquipado = null;
         this.habilidadEspecial = habilidad;
+    }
+
+    public String ejecutarTurnoCombate(Personaje objetivo) {
+        if (this.cooldownHabilidad == 0) {
+            return this.usarHabilidadEspecial(objetivo);
+        }
+        return this.atacar(objetivo);
     }
 
     public int calcularAtaque() {
@@ -98,9 +106,11 @@ public abstract class Personaje {
         return reportes;
     }
 
-    public void usarEnergia(int cantidad) throws Exception {
+    public void usarEnergia(int cantidad) throws EnergiaInsuficienteException {
         if (this.energiaActual < cantidad) {
-            throw new Exception("¡Energía insuficiente!");
+            throw new EnergiaInsuficienteException(
+                    this.nombre + " no tiene suficiente energia. Requiere: " + cantidad + ", Actual: " + this.energiaActual
+            );
         }
         this.energiaActual -= cantidad;
     }
